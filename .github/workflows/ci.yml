@@ -1,0 +1,20 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  build-test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/test.sh
+      - run: ./scripts/build.sh
+      - name: Verify bundle
+        run: |
+          APP=dist/ClaudeLimit.app
+          lipo -info $APP/Contents/MacOS/ClaudeLimit | grep -q arm64
+          lipo -info $APP/Contents/MacOS/ClaudeLimit | grep -q x86_64
+          test "$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' $APP/Contents/Info.plist)" = "true"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' $APP/Contents/Info.plist)" = "dev.tfi.claudelimit"
+          codesign --verify --deep --strict $APP

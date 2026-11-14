@@ -1,0 +1,23 @@
+name: Release
+on:
+  push:
+    tags: ["v*.*.*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag matches VERSION
+        run: test "v$(tr -d '[:space:]' < VERSION)" = "${GITHUB_REF_NAME}"
+      - run: ./scripts/test.sh
+      - run: ./scripts/build.sh
+      - run: ./scripts/package.sh
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/ClaudeLimit-*-macOS.zip dist/ClaudeLimit-*-macOS.zip.sha256 \
+            --title "ClaudeLimit $GITHUB_REF_NAME" \
+            --notes "Ad-hoc signed, **not notarized**: on first launch use System Settings > Privacy & Security > Open Anyway. Requires Claude Code installed and signed in. See CHANGELOG.md."

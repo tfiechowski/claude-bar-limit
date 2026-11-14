@@ -12,9 +12,9 @@ jobs:
       - run: ./scripts/build.sh
       - name: Verify bundle
         run: |
-          APP=dist/ClaudeLimit.app
-          lipo -info $APP/Contents/MacOS/ClaudeLimit | grep -q arm64
-          lipo -info $APP/Contents/MacOS/ClaudeLimit | grep -q x86_64
+          APP=dist/ClaudeBarLimit.app
+          lipo -info $APP/Contents/MacOS/ClaudeBarLimit | grep -q arm64
+          lipo -info $APP/Contents/MacOS/ClaudeBarLimit | grep -q x86_64
           test "$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' $APP/Contents/Info.plist)" = "true"
-          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' $APP/Contents/Info.plist)" = "dev.tfi.claudelimit"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' $APP/Contents/Info.plist)" = "dev.tfi.claudebarlimit"
           codesign --verify --deep --strict $APP

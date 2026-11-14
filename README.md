@@ -1,4 +1,4 @@
-# ClaudeLimit
+# ClaudeBarLimit
 
 **Claude usage, always one glance away.**
 
@@ -9,10 +9,10 @@ A tiny, free macOS menu-bar app that shows your Claude Code usage and reset time
 ## Install in one command
 
 ```sh
-brew install --cask tfiechowski/tap/claude-limit
+brew install --cask tfiechowski/tap/claude-bar-limit
 ```
 
-Launch ClaudeLimit from Applications. Look for `C: 19%` in your menu bar — that means 19% of your current 5-hour session limit has been used.
+Launch ClaudeBarLimit from Applications. Look for `C: 19%` in your menu bar — that means 19% of your current 5-hour session limit has been used.
 
 **Requirements:** macOS 13+ (Apple Silicon and Intel), Claude Code installed and signed in with a Claude subscription. Homebrew is only needed for the Homebrew install. This build is ad-hoc signed and **not Apple-notarized**, so macOS may ask for one-time approval on first launch: open **System Settings → Privacy & Security** and choose **Open Anyway** ([Apple's guide](https://support.apple.com/en-us/102445)).
 
@@ -25,13 +25,13 @@ Launch ClaudeLimit from Applications. Look for `C: 19%` in your menu bar — tha
 
 ## Other ways to install
 
-- **ZIP:** download the latest `ClaudeLimit-*-macOS.zip` from [Releases](https://github.com/tfiechowski/claude-limit/releases), unzip, drag `ClaudeLimit.app` to Applications, and approve it on first launch as above.
+- **ZIP:** download the latest `ClaudeBarLimit-*-macOS.zip` from [Releases](https://github.com/tfiechowski/claude-bar-limit/releases), unzip, drag `ClaudeBarLimit.app` to Applications, and approve it on first launch as above.
 - **From source** (needs Xcode Command Line Tools, build-time only):
   ```sh
-  git clone https://github.com/tfiechowski/claude-limit.git
-  cd claude-limit
+  git clone https://github.com/tfiechowski/claude-bar-limit.git
+  cd claude-bar-limit
   ./scripts/build.sh
-  open dist/ClaudeLimit.app
+  open dist/ClaudeBarLimit.app
   ```
 
 ## FAQ
@@ -43,13 +43,13 @@ Launch ClaudeLimit from Applications. Look for `C: 19%` in your menu bar — tha
 - **Does it run a background server?** No.
 - **Does checking usage spend my quota?** No. It runs Claude Code's built-in `/usage` command, which is handled locally and sends no prompt to a model (verified against Claude Code 2.1.x; see [docs/COMPLIANCE.md](docs/COMPLIANCE.md)).
 - **Why does macOS warn me?** The app isn't notarized (that requires a paid Apple Developer account). Use *Open Anyway* as described above; never disable Gatekeeper globally.
-- **Update?** `brew upgrade --cask tfiechowski/tap/claude-limit`
-- **Uninstall?** `brew uninstall --cask tfiechowski/tap/claude-limit`
-- **Usage can't be read?** Run `claude -p "/usage"` in Terminal. If that prints a `Current session: …` line but the app doesn't, [open an issue](https://github.com/tfiechowski/claude-limit/issues) with the output (redact anything private). Claude Code is in a non-standard location? `defaults write dev.tfi.claudelimit customCLIPath /path/to/claude`
+- **Update?** `brew upgrade --cask tfiechowski/tap/claude-bar-limit`
+- **Uninstall?** `brew uninstall --cask tfiechowski/tap/claude-bar-limit`
+- **Usage can't be read?** Run `claude -p "/usage"` in Terminal. If that prints a `Current session: …` line but the app doesn't, [open an issue](https://github.com/tfiechowski/claude-bar-limit/issues) with the output (redact anything private). Claude Code is in a non-standard location? `defaults write dev.tfi.claudebarlimit customCLIPath /path/to/claude`
 
 ## Privacy
 
-ClaudeLimit has no accounts, telemetry, analytics, or backend, and makes no network requests itself. Every refresh runs your locally installed Claude Code (`claude -p --no-session-persistence /usage`), which may itself contact Anthropic. ClaudeLimit never reads your credentials, keychain, or cookies.
+ClaudeBarLimit has no accounts, telemetry, analytics, or backend, and makes no network requests itself. Every refresh runs your locally installed Claude Code (`claude -p --no-session-persistence /usage`), which may itself contact Anthropic. ClaudeBarLimit never reads your credentials, keychain, or cookies.
 
 ## License
 

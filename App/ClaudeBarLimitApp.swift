@@ -1,13 +1,15 @@
 import SwiftUI
 import AppKit
+import ServiceManagement
 
 @main
-struct ClaudeLimitApp: App {
+struct ClaudeBarLimitApp: App {
     @StateObject private var store = UsageStore(service: ClaudeUsageService())
+    @StateObject private var login = LaunchAtLogin()
 
     var body: some Scene {
         MenuBarExtra {
-            MenuContent(store: store)
+            MenuContent(store: store, login: login)
         } label: {
             Text(store.menuBarTitle())
                 .accessibilityLabel(store.accessibilityTitle())
@@ -18,6 +20,7 @@ struct ClaudeLimitApp: App {
 
 struct MenuContent: View {
     @ObservedObject var store: UsageStore
+    @ObservedObject var login: LaunchAtLogin
 
     var body: some View {
         let now = Date()
@@ -40,6 +43,11 @@ struct MenuContent: View {
             .keyboardShortcut("r")
             .disabled(store.refreshing)
         Toggle("Show remaining in menu bar", isOn: $store.showRemaining)
+        Toggle("Open at login", isOn: Binding(get: { login.isEnabled }, set: { login.set($0) }))
+        if login.needsApproval {
+            Button("Approve in System Settings → Login Items…") { SMAppService.openSystemSettingsLoginItems() }
+        }
+        if let e = login.lastError { Text(e) }
         Picker("Refresh every", selection: $store.refreshInterval) {
             Text("1 minute").tag(60.0)
             Text("5 minutes").tag(300.0)
@@ -50,14 +58,14 @@ struct MenuContent: View {
         Link("Open Claude", destination: URL(string: "https://claude.ai")!)
         Divider()
         Text("Unofficial · not affiliated with Anthropic")
-        Button("Quit ClaudeLimit") { NSApplication.shared.terminate(nil) }
+        Button("Quit ClaudeBarLimit") { NSApplication.shared.terminate(nil) }
             .keyboardShortcut("q")
     }
 
     private func headerText(_ now: Date) -> String {
-        guard let t = store.lastSuccess else { return store.refreshing ? "ClaudeLimit — loading…" : "ClaudeLimit — no data yet" }
+        guard let t = store.lastSuccess else { return store.refreshing ? "ClaudeBarLimit — loading…" : "ClaudeBarLimit — no data yet" }
         let age = Formatting.relativeAge(of: t, now: now)
-        return store.isStale(at: now) ? "ClaudeLimit — STALE, last updated \(age)" : "ClaudeLimit — updated \(age)"
+        return store.isStale(at: now) ? "ClaudeBarLimit — STALE, last updated \(age)" : "ClaudeBarLimit — updated \(age)"
     }
 
     @ViewBuilder

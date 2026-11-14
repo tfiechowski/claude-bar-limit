@@ -1,11 +1,11 @@
 #!/bin/bash
-# Builds dist/ClaudeLimit.app (universal: arm64 + x86_64). Needs Xcode Command Line Tools (build-time only).
+# Builds dist/ClaudeBarLimit.app (universal: arm64 + x86_64). Needs Xcode Command Line Tools (build-time only).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VERSION="$(tr -d '[:space:]' < VERSION)"
-BUNDLE_ID="dev.tfi.claudelimit"
-APP="dist/ClaudeLimit.app"
+BUNDLE_ID="dev.tfi.claudebarlimit"
+APP="dist/ClaudeBarLimit.app"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -15,18 +15,18 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 for ARCH in arm64 x86_64; do
   xcrun swiftc -swift-version 5 -parse-as-library -O \
     -target "$ARCH-apple-macos13.0" \
-    App/*.swift -o "$TMP/ClaudeLimit-$ARCH"
+    App/*.swift -o "$TMP/ClaudeBarLimit-$ARCH"
 done
-lipo -create "$TMP"/ClaudeLimit-arm64 "$TMP"/ClaudeLimit-x86_64 -output "$APP/Contents/MacOS/ClaudeLimit"
+lipo -create "$TMP"/ClaudeBarLimit-arm64 "$TMP"/ClaudeBarLimit-x86_64 -output "$APP/Contents/MacOS/ClaudeBarLimit"
 
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>$BUNDLE_ID</string>
-<key>CFBundleExecutable</key><string>ClaudeLimit</string>
-<key>CFBundleName</key><string>ClaudeLimit</string>
-<key>CFBundleDisplayName</key><string>ClaudeLimit</string>
+<key>CFBundleExecutable</key><string>ClaudeBarLimit</string>
+<key>CFBundleName</key><string>ClaudeBarLimit</string>
+<key>CFBundleDisplayName</key><string>ClaudeBarLimit</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
 <key>CFBundleShortVersionString</key><string>$VERSION</string>
@@ -42,4 +42,4 @@ PLIST
 codesign --force --sign - "$APP"
 plutil -lint "$APP/Contents/Info.plist" >/dev/null
 echo "Built $APP (v$VERSION)"
-lipo -info "$APP/Contents/MacOS/ClaudeLimit"
+lipo -info "$APP/Contents/MacOS/ClaudeBarLimit"

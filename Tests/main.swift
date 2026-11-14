@@ -110,7 +110,7 @@ actor Script: UsageFetching {
 let sample = UsageReport(session: UsageMetric(label: "session", percentUsed: 19, resetText: nil, resetDate: nil), weekly: nil, extraWeekly: [])
 
 await test("store: title modes, stale marking, backoff") {
-    let d = UserDefaults(suiteName: "claudelimit.tests.\(UUID())")!
+    let d = UserDefaults(suiteName: "claudebarlimit.tests.\(UUID())")!
     let svc = Script([.success(sample), .failure(.timedOut)])
     let store = await UsageStore(service: svc, defaults: d, clock: { now })
     await check(store.menuBarTitle(at: now) == "C: ?%", "unavailable")
@@ -129,7 +129,7 @@ await test("store: title modes, stale marking, backoff") {
     await check(store.nextDelay == 600, "capped")
 }
 await test("store: stale when too old or reset passed; no overlap") {
-    let d = UserDefaults(suiteName: "claudelimit.tests.\(UUID())")!
+    let d = UserDefaults(suiteName: "claudebarlimit.tests.\(UUID())")!
     let past = UsageReport(session: UsageMetric(label: "session", percentUsed: 50, resetText: "x", resetDate: now.addingTimeInterval(-10)), weekly: nil, extraWeekly: [])
     let store = await UsageStore(service: Script([.success(past)]), defaults: d, clock: { now })
     await store.refresh()

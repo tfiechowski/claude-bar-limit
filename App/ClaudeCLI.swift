@@ -28,7 +28,7 @@ enum UsageError: Error, Equatable {
         case .launchFailed:
             return "Couldn't start Claude Code. Check that the installed binary is executable."
         case .unexpectedFormat:
-            return "Claude Code's usage output changed and couldn't be read. Please update ClaudeLimit or report an issue."
+            return "Claude Code's usage output changed and couldn't be read. Please update ClaudeBarLimit or report an issue."
         case .noSubscriptionData:
             return "No usage limits reported. Limits are only shown when Claude Code is signed in with a Claude subscription."
         }

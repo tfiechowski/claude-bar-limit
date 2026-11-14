@@ -4,7 +4,7 @@
 
 A tiny, free macOS menu-bar app that shows your Claude Code usage and reset times. It reuses the Claude Code login you already have — no separate authentication, API keys, SwiftBar, or setup.
 
-<!-- TODO: add a real screenshot captured from the running app (docs/screenshot.png) before publishing. -->
+<p align="center"><img src="docs/screenshot-menubar.png" alt="ClaudeBarLimit in the macOS menu bar showing C: 53%" width="400"></p>
 
 ## Install in one command
 

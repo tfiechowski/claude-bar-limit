@@ -6,8 +6,8 @@
 
 **Your Claude usage, always one glance away.**
 
-Stop typing `/usage` to find out how close you are to the limit.<br>
-ClaudeBarLimit keeps your Claude Code session usage in the macOS menu bar, together with the time it resets.
+One place for your account-wide Claude limit, no matter how many terminals and IDEs you have open.<br>
+ClaudeBarLimit keeps your usage and its reset time in the macOS menu bar.
 
 <a href="https://github.com/tfiechowski/claude-bar-limit/releases/latest"><img src="https://img.shields.io/badge/Download_for_macOS-D97757?style=for-the-badge&logo=apple&logoColor=white" alt="Download for macOS" height="44"></a>
 
@@ -25,9 +25,11 @@ ClaudeBarLimit keeps your Claude Code session usage in the macOS menu bar, toget
 
 ## Why
 
-Claude Code's usage limits are invisible until you hit them. You only notice when you're in the middle of a refactor and get stopped. ClaudeBarLimit shows the number all the time, so you can plan around it:
+Your Claude limit is shared by every session on your account, but you only ever see pieces of it: a token count in one terminal, a warning in your IDE, a `/usage` you have to remember to type. With several agents running at once, nothing keeps the *whole* picture in view.
 
-- 🟢 **See where you stand at a glance.** Session usage sits in your menu bar next to the clock.
+ClaudeBarLimit puts that one number in a single place that's always visible, so you can plan your work around it:
+
+- 🎯 **One number for all your sessions.** Your account-wide usage sits next to the clock. It doesn't matter which terminal, IDE, or agent used it.
 - ⏱️ **Know when the limit resets.** You get a countdown plus the local time, so you know whether to wait or switch tasks.
 - 📅 **Keep an eye on the weekly cap too.** Weekly usage appears whenever Claude Code reports it.
 - 🔐 **No setup.** It uses the Claude Code login you already have: no API key, no extra sign-in, no plugins.

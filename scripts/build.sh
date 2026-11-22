@@ -19,6 +19,15 @@ for ARCH in arm64 x86_64; do
 done
 lipo -create "$TMP"/ClaudeBarLimit-arm64 "$TMP"/ClaudeBarLimit-x86_64 -output "$APP/Contents/MacOS/ClaudeBarLimit"
 
+# App icon: assets/AppIcon.png (1024x1024) -> AppIcon.icns
+ICONSET="$TMP/AppIcon.iconset"
+mkdir -p "$ICONSET"
+for SZ in 16 32 128 256 512; do
+  sips -z $SZ $SZ assets/AppIcon.png --out "$ICONSET/icon_${SZ}x${SZ}.png" >/dev/null
+  sips -z $((SZ*2)) $((SZ*2)) assets/AppIcon.png --out "$ICONSET/icon_${SZ}x${SZ}@2x.png" >/dev/null
+done
+iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
+
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -27,6 +36,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <key>CFBundleExecutable</key><string>ClaudeBarLimit</string>
 <key>CFBundleName</key><string>ClaudeBarLimit</string>
 <key>CFBundleDisplayName</key><string>ClaudeBarLimit</string>
+<key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
 <key>CFBundleShortVersionString</key><string>$VERSION</string>

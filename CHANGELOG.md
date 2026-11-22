@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0 — 2026-11-22
+- App icon.
+
 ## 0.1.0 — 2026-11-15
 - Menu-bar usage for the 5-hour session and weekly limits via the local Claude Code CLI.
 - Used/remaining toggle, 1/5/10-minute refresh, stale-data marking, backoff on failures.
